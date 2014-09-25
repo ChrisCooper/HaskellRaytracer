@@ -19,3 +19,5 @@ cabal-dev
 .hsenv
 cabal.sandbox.config
 cabal.config
+Raytracer/src/Main
+*.ppm
