@@ -21,7 +21,7 @@ main = do
 
 
 worldStrToPPM :: String -> String
-worldStrToPPM worldStr = imageDataToPPM (renderWorld (makeWorld worldStr))
+worldStrToPPM = imageDataToPPM .renderWorld .makeWorld
 
 renderWorld :: World -> ImageData
 renderWorld world = ImageData 0 (map (map (traceRayColor world)) cameraRays) -- start with just spheres, then abstract to typeclass
@@ -31,8 +31,10 @@ renderWorld world = ImageData 0 (map (map (traceRayColor world)) cameraRays) -- 
 ----------------------------------------------------------------------------------------------------
 -- TODO
 --
--- Give vectors operators with Num typeclass
+-- Give Vector operators with Num typeclass
 --
--- Remove nesting in ImageData, camera ray list, etc. (splitEvery)
+-- Give Intersection operators with Ord typeclass
+--
+-- Remove nesting in ImageData, camera ray list, etc. (use "splitEvery" to seperate rows)
 --
 -- use newtype on Point, Radius, degrees, etc.
