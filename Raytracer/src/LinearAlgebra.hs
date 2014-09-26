@@ -17,6 +17,8 @@ data Sphere = Sphere Point Double
 
 defaultSphere = Sphere (Vector 0 0 0) 1
 
+vecUp = Vector 0 1 0
+
 ----------------------------------------------------------------------------------------------------
 -- Simple Vector Math
 ----------------------------------------------------------------------------------------------------
@@ -59,17 +61,25 @@ pointDist v1 v2 = vecLength (v2 `vecMinus` v1)
 
 data Intersection = Intersection {
     tValue :: Double,
-    location :: Vector
+    location :: Vector,
+    iNormal :: Vector
 } deriving (Show)
 
 intersectT :: Ray -> Sphere -> Maybe Intersection
 intersectT (Ray start dir) (Sphere center radius) = if discriminant < 0
     then Nothing
-    else Just (Intersection 1 (Vector 0 0 1))
+    else Just (Intersection {
+        tValue = hitTVal,
+        location = loc,
+        iNormal = normalized (loc `vecMinus` center)
+        })
         where a = dir `dot` dir
               b = 2 * (dir `dot` (start `vecMinus` center))
               c = ((start `vecMinus` center) `dot` (start `vecMinus` center)) - (radius^2)
               discriminant = b^2 - (4 * a * c)
+              hitTVal = minimum [tVal (+), tVal (-)]
+              tVal op = (-b `op` sqrt(discriminant)) / (2*a)
+              loc = (start `vecPlus` (dir `vecDMult` hitTVal))
 
 
 

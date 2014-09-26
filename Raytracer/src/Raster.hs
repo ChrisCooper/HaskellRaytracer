@@ -19,3 +19,7 @@ maxColorValue = 2^8 - 1
 
 pixelString :: Color -> String
 pixelString (Color r g b) = unwords (map (show . round) [r,g,b])
+
+grey :: Double -> Color
+grey fraction = (Color v v v)
+    where v = fraction * (fromIntegral maxColorValue)

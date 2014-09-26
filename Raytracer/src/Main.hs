@@ -21,11 +21,11 @@ main = do
 
 
 worldStrToPPM :: String -> String
-worldStrToPPM = imageDataToPPM .renderWorld .makeWorld
+worldStrToPPM = imageDataToPPM . renderWorld . makeWorld
 
 renderWorld :: World -> ImageData
 renderWorld world = ImageData 0 (map (map (traceRayColor world)) cameraRays) -- start with just spheres, then abstract to typeclass
-    where cameraRays = pixelRays (wCamera world) (Canvas 500 500)
+    where cameraRays = pixelRays (wCamera world) (Canvas 1600 900)
 
 
 ----------------------------------------------------------------------------------------------------

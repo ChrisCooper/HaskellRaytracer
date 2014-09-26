@@ -7,7 +7,7 @@ import Raster
 
 traceRayColor :: World -> Ray -> Color
 traceRayColor world ray = case (closestIntersection ray (wObjects world)) of
-    Just intersection -> (Color 0 0 0)
+    Just intersection -> grey (max 0 ((iNormal intersection) `dot ` vecUp))
     Nothing -> (wFogColor world)
 
 
@@ -17,6 +17,8 @@ closestIntersection ray spheres = minimumBy intersectionOrd (map (intersectT ray
 intersectionOrd :: Maybe Intersection -> Maybe Intersection -> Ordering
 intersectionOrd Nothing (Just bInter) = GT
 intersectionOrd (Just aInter) Nothing = LT
-intersectionOrd (Just aInter) (Just bInter) = EQ -- TODO This works for silhouettes only
+intersectionOrd (Just aInter) (Just bInter) = if (tValue aInter) < (tValue bInter)
+    then LT
+    else GT
 intersectionOrd _ _ = EQ
 
